@@ -50,8 +50,8 @@ public class Ellipse extends Shape {
   }
 
   @Override
-  ShapeType type() {
-    return Shape.ShapeType.ELLIPSE;
+  Drawable.DrawableType type() {
+    return Drawable.DrawableType.ELLIPSE;
   }
 
   /**

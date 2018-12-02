@@ -15,10 +15,6 @@ public abstract class Shape {
 	// of Shape belong to the processingwrapper package.
 	Shape() { }
 	
-	enum ShapeType {
-		CANVAS, RECTANGLE, ELLIPSE, CIRCLE;
-	}
-  
 	// Return if a float is positive (i.e. finite and greater than 0.)
   static boolean isPositive(float f) {
     return Float.isFinite(f) && f > 0.0f;
@@ -27,5 +23,5 @@ public abstract class Shape {
 	/**
 	 * @return the type of shape object.
 	 */
-	abstract ShapeType type();
+	abstract Drawable.DrawableType type();
 }

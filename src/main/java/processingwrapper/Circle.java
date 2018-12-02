@@ -34,8 +34,8 @@ public class Circle extends Shape {
   }
 
   @Override
-  ShapeType type() {
-    return Shape.ShapeType.CIRCLE;
+  Drawable.DrawableType type() {
+    return Drawable.DrawableType.CIRCLE;
   }
 
   /**

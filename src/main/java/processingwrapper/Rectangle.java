@@ -64,8 +64,8 @@ public class Rectangle extends Shape {
   }
 
   @Override
-  ShapeType type() {
-    return Shape.ShapeType.RECTANGLE;
+  Drawable.DrawableType type() {
+    return Drawable.DrawableType.RECTANGLE;
   }
 
 }
