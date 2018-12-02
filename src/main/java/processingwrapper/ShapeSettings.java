@@ -13,11 +13,7 @@ public class ShapeSettings {
   private float strokeWeight;
   private Color strokeColor;
 
-  private ShapeSettings() {
-    this.fillColor = NO_COLOR;
-    this.strokeWeight = 0;
-    this.strokeColor = NO_COLOR;
-  }
+  private ShapeSettings() {}
 
   private ShapeSettings(Color fillColor) {
     this.fillColor = fillColor;
