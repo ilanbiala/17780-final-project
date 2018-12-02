@@ -27,6 +27,7 @@ public class ShapeSettings {
 
   /**
    * Creates a {@link ShapeSettings} instance with the given fill color.
+   *
    * @param fillColor The fill color to set.
    * @return A new {@link ShapeSettings} instance.
    */
@@ -36,6 +37,7 @@ public class ShapeSettings {
 
   /**
    * Sets the fill color of the calling instance.
+   *
    * @param fillColor The fill color to set.
    * @return The calling {@link ShapeSettings} instance.
    */
@@ -46,8 +48,9 @@ public class ShapeSettings {
 
   /**
    * Creates a {@link ShapeSettings} instance with the given stroke weight and color.
+   *
    * @param strokeWeight The stroke weight to set.
-   * @param strokeColor The stroke color to set.
+   * @param strokeColor  The stroke color to set.
    * @return A new {@link ShapeSettings} instance.
    */
   public static ShapeSettings createWithStroke(float strokeWeight, Color strokeColor) {
@@ -56,8 +59,9 @@ public class ShapeSettings {
 
   /**
    * Sets the stroke weight of the calling instance.
+   *
    * @param strokeWeight The stroke weight to set.
-   * @param strokeColor The stroke color to set.
+   * @param strokeColor  The stroke color to set.
    * @return The calling {@link ShapeSettings} instance.
    */
   public ShapeSettings withStroke(float strokeWeight, Color strokeColor) {
