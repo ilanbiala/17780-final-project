@@ -4,6 +4,7 @@
 # generated files
 bin/
 build/
+doc/
 
 # workspace configuration files
 .settings/
