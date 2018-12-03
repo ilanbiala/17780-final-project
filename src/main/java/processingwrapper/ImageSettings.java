@@ -5,7 +5,8 @@ import static java.lang.Float.NaN;
 import java.awt.Color;
 
 /**
- * The {@link ImageSettings} class is used to define the aesthetic properties of an Image.
+ * The {@link ImageSettings} class is used to define the aesthetic properties of an Image. An {@link ImageSettings}
+ * instance is immutable; once created, any modifications will return a new instance.
  */
 public class ImageSettings {
   // Processing uses white to specify a tint with no color.
@@ -16,9 +17,9 @@ public class ImageSettings {
   // size, we'll be able to check for NaN and use the loaded image's size.
   private static final float DEFAULT_SIZE = NaN;
 
-  private Color tint;
-  private float width;
-  private float height;
+  private final Color tint;
+  private final float width;
+  private final float height;
 
   private ImageSettings(Color tint) {
     this.tint = tint;
@@ -28,6 +29,12 @@ public class ImageSettings {
 
   private ImageSettings(float width, float height) {
     this.tint = NO_TINT;
+    this.width = width;
+    this.height = height;
+  }
+
+  private ImageSettings(Color tint, float width, float height) {
+    this.tint = tint;
     this.width = width;
     this.height = height;
   }
@@ -43,14 +50,13 @@ public class ImageSettings {
   }
 
   /**
-   * Sets the tint of the calling instance.
+   * Creates a new {@link ImageSettings} instance with the given tint and the settings of the calling instance.
    *
    * @param tint the tint to set.
-   * @return The calling {@link ImageSettings} instance.
+   * @return A new {@link ImageSettings} instance.
    */
   public ImageSettings withTint(Color tint) {
-    this.tint = tint;
-    return this;
+    return new ImageSettings(tint, this.width, this.height);
   }
 
   /**
@@ -65,15 +71,14 @@ public class ImageSettings {
   }
 
   /**
-   * Sets the size of the calling instance.
+   * Creates a new {@link ImageSettings} instance with the given width, height, and the settings of the calling
+   * instance.
    *
    * @param width  the width to set.
    * @param height the height to set.
-   * @return The calling {@link ImageSettings} instance.
+   * @return A new {@link ImageSettings} instance.
    */
   public ImageSettings withSize(float width, float height) {
-    this.width = width;
-    this.height = height;
-    return this;
+    return new ImageSettings(this.tint, width, height);
   }
 }
