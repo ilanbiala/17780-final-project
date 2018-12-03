@@ -31,7 +31,7 @@ public interface ProcessingApp {
 
       public void draw() {
         app.drawFrame(mainCanvas);
-        mainCanvas.flushAt(0,0);
+        mainCanvas.commitAt(0,0);
       }
     }
 
