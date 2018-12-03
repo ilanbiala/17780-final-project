@@ -11,14 +11,8 @@ import java.util.Objects;
  */
 public class Rectangle extends Shape {
   
-  private final float width;
-  private final float height;
-  
   private Rectangle(float width, float height) {
-    assert(isPositive(width));
-    assert(isPositive(height));
-    this.width = width;
-    this.height = height;
+    super(width, height);
   }
 
   /**
@@ -30,20 +24,6 @@ public class Rectangle extends Shape {
     if (!isPositive(width)) throw new IllegalArgumentException("width");
     if (!isPositive(height)) throw new IllegalArgumentException("height");
     return new Rectangle(width, height);
-  }
-  
-  /**
-   * @return the width (x dimension) of the rectangle.
-   */
-  public float width() {
-    return width;
-  }
-  
-  /**
-   * @return the height (y dimension) of the rectangle.
-   */
-  public float height() {
-    return height;
   }
   
   @Override

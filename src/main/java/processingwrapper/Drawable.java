@@ -5,7 +5,7 @@ import java.util.Optional;
 
 /**
  * Instances of this class are packages of a drawable thing (like a shape
- * or an image) and settings for how to draw them (like {@link ImageSettings}
+ * or an image or a canvas) and settings for how to draw them (like {@link ImageSettings}
  * or {@link ShapeSettings}). Instances of this can be passed as an argument
  * to {@link Canvas#draw}.
  * 
@@ -22,7 +22,7 @@ public class Drawable {
     assert(Objects.nonNull(settings));
     this.shape = shape;
     shapeSettings = settings;
-    isImage = false;
+    type = shape.type();
   }
 
   private Drawable(Image image, Optional<ImageSettings> settings) {
@@ -30,7 +30,13 @@ public class Drawable {
     assert(Objects.nonNull(settings));
     this.image = image;
     imageSettings = settings;
-    isImage = true;
+    type = DrawableType.IMAGE;
+  }
+  
+  private Drawable(Canvas canvas) {
+    assert(Objects.nonNull(canvas));
+	  this.canvas = canvas;
+	  type = DrawableType.CANVAS;
   }
   
   /**
@@ -55,43 +61,49 @@ public class Drawable {
     return new Drawable(Objects.requireNonNull(image),
         Optional.of(Objects.requireNonNull(settings)));
   }
+  
+  /**
+   * Create a drawable canvas.
+   */
+  public static Drawable ofCanvas(Canvas canvas) {
+    return new Drawable(Objects.requireNonNull(canvas));
+  }
 
-  private final boolean isImage;
-  
-  // These are set if isImage is false.
-  private ShapeSettings shapeSettings;
-  private Shape shape;
-  
-  // These are set if isImage is true;
-  private Optional<ImageSettings> imageSettings;
-  private Image image;
+  private final DrawableType type;
   
   // Return the underlying drawable type.
   DrawableType type() {
-    if (isImage) {
-      return DrawableType.IMAGE;
-    } else {
-      return shape.type();
-    }
+    return type;
   }
   
   // Only call these if type() returns IMAGE.
+  private Optional<ImageSettings> imageSettings;
+  private Image image;
   Optional<ImageSettings> imageSettings() {
-    assert(isImage);
+    assert(type == DrawableType.IMAGE);
     return imageSettings;
   }
   Image image() {
-    assert(isImage);
+    assert(type == DrawableType.IMAGE);
     return image;
   }
   
-  // Only call these if type() doesn't return IMAGE.
+  // Only call these if type() doesn't return IMAGE or CANVAS.
+  private ShapeSettings shapeSettings;
+  private Shape shape;
   ShapeSettings shapeSettings() {
-    assert(!isImage);
+    assert(type != DrawableType.IMAGE && type != DrawableType.CANVAS);
     return shapeSettings;
   }
   Shape shape() {
-    assert(!isImage);
+    assert(type != DrawableType.IMAGE && type != DrawableType.CANVAS);
     return shape;
+  }
+  
+  // Only call these if type() returns CANVAS.
+  private Canvas canvas;
+  Canvas canvas() {
+    assert(type == DrawableType.CANVAS);
+    return canvas;
   }
 }

@@ -1,7 +1,5 @@
 package processingwrapper;
 
-import java.util.Objects;
-
 /**
  * A circle that can be drawn in the screen. Like other {@link Shape}
  * objects, an instance of Circle just contains information about its
@@ -14,6 +12,7 @@ public class Circle extends Shape {
   private final float radius;
   
   private Circle(float radius) {
+    super(2*radius, 2*radius);
     assert(isPositive(radius));
     this.radius = radius;
   }
@@ -52,13 +51,6 @@ public class Circle extends Shape {
       return radius == c.radius;
     }
     return false;
-  }
-  
-  @Override
-  public int hashCode() {
-    // This must return the same hash code as an ellipse that
-    // would test as equal to this circle.
-    return Objects.hash(2 * radius, 2 * radius);
   }
   
   @Override

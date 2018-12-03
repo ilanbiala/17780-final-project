@@ -14,14 +14,8 @@ import java.util.Objects;
  */
 public class Ellipse extends Shape {
  
-  private final float width;
-  private final float height;
-  
   private Ellipse(float width, float height) {
-    assert(isPositive(width));
-    assert(isPositive(height));
-    this.width = width;
-    this.height = height;
+    super(width, height);
   }
   
   /**
@@ -35,20 +29,6 @@ public class Ellipse extends Shape {
     return new Ellipse(width, height);
   }
   
-  /**
-   * @return the width (x-dimension) of the ellipse.
-   */
-  public float width() {
-    return width;
-  }
-
-  /**
-   * @return the height (y-dimension) of the ellipse.
-   */
-  public float height() {
-    return height;
-  }
-
   @Override
   Drawable.DrawableType type() {
     return Drawable.DrawableType.ELLIPSE;
