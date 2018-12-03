@@ -21,7 +21,7 @@ public class Position {
       this.processingDrawMode = processingDrawMode;
     }
 
-    int getProcessingDrawMode() {
+    int processingDrawMode() {
       return this.processingDrawMode;
     }
   }
@@ -39,21 +39,21 @@ public class Position {
   /**
    * @return the x-coordinate of this {@link Position} instance.
    */
-  public float getX() {
+  public float x() {
     return x;
   }
 
   /**
    * @return the y-coordinate of this {@link Position} instance.
    */
-  public float getY() {
+  public float y() {
     return y;
   }
 
   /**
    * @return the drawing mode of this {@link Position} instance.
    */
-  public DrawMode getDrawMode() {
+  public DrawMode drawMode() {
     return drawMode;
   }
 
