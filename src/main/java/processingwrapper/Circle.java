@@ -32,11 +32,6 @@ public class Circle extends Ellipse {
     return radius;
   }
 
-  @Override
-  Drawable.DrawableType type() {
-    return Drawable.DrawableType.CIRCLE;
-  }
-
   /**
    * A circle is equal to another circle with the same radius,
    * or to an ellipse with the same width and height.

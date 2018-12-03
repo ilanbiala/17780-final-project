@@ -14,7 +14,7 @@ import java.util.Optional;
 public class Drawable {
   
 	enum DrawableType {
-		CANVAS, RECTANGLE, ELLIPSE, CIRCLE, IMAGE;
+		CANVAS, RECTANGLE, ELLIPSE, IMAGE;
 	}
   
   private Drawable(Shape shape, ShapeSettings settings) {
