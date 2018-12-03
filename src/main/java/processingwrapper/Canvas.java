@@ -1,11 +1,18 @@
 package processingwrapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Canvas {
   private int width, height;
+  private List<Drawable> drawables;
+  private List<Position> positions;
 
   public Canvas(int width, int height) {
     this.width = width;
     this.height = height;
+    this.drawables = new ArrayList<>();
+    this.positions = new ArrayList<>();
   }
 
   public void draw(Drawable drawable, Position pos) {
