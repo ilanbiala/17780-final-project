@@ -14,7 +14,8 @@ import java.util.Objects;
  */
 public class Ellipse extends Shape {
  
-  private Ellipse(float width, float height) {
+  // package-private so that Circle can instantiate.
+  Ellipse(float width, float height) {
     super(width, height);
   }
   

@@ -7,7 +7,7 @@ package processingwrapper;
  * in the call to {@link Canvas#draw}; or an instance of {@link Drawable}
  * can be created combining a circle with drawing settings.
  */
-public class Circle extends Shape {
+public class Circle extends Ellipse {
  
   private final float radius;
   
