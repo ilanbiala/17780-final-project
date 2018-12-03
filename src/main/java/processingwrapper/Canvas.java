@@ -39,7 +39,7 @@ public class Canvas {
 
   }
 
-  void flushAt(int x, int y) {
+  void commitAt(int x, int y) {
 
   }
 
