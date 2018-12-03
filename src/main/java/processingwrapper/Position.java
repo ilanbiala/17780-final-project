@@ -8,13 +8,16 @@ import processing.core.PApplet;
  */
 public class Position {
 
-  private enum DrawMode {
+  /**
+   * The {@link DrawMode} class is used to specify the drawing mode of objects.
+   */
+  public enum DrawMode {
     TOP_LEFT_CORNER(PApplet.CORNER),
     CENTER(PApplet.CENTER);
 
-    int processingDrawMode;
+    private int processingDrawMode;
 
-    DrawMode(int processingDrawMode) {
+    private DrawMode(int processingDrawMode) {
       this.processingDrawMode = processingDrawMode;
     }
 
@@ -34,13 +37,34 @@ public class Position {
   }
 
   /**
+   * @return the x-coordinate of this {@link Position} instance.
+   */
+  public float getX() {
+    return x;
+  }
+
+  /**
+   * @return the y-coordinate of this {@link Position} instance.
+   */
+  public float getY() {
+    return y;
+  }
+
+  /**
+   * @return the drawing mode of this {@link Position} instance.
+   */
+  public DrawMode getDrawMode() {
+    return drawMode;
+  }
+
+  /**
    * Creates a {@link Position} instance with the given coordinates.
    *
    * @param x The x-coordinate of the center of the object to be drawn.
    * @param y The y-coordinate of the center of the object to be drawn.
    * @return A {@link Position} instance.
    */
-  static Position centeredAt(float x, float y) {
+  public static Position centeredAt(float x, float y) {
     return new Position(x, y, DrawMode.CENTER);
   }
 
@@ -51,7 +75,7 @@ public class Position {
    * @param y The y-coordinate of the top left corner of the object to be drawn.
    * @return A {@link Position} instance.
    */
-  static Position topLeftCornerAt(float x, float y) {
+  public static Position topLeftCornerAt(float x, float y) {
     return new Position(x, y, DrawMode.TOP_LEFT_CORNER);
   }
 
@@ -62,7 +86,7 @@ public class Position {
    * @param dy The delta in the vertical direction to translate the object by.
    * @return A new {@link Position} instance.
    */
-  Position translateBy(float dx, float dy) {
+  public Position translateBy(float dx, float dy) {
     return new Position(this.x + dx, this.y + dy, this.drawMode);
   }
 }
