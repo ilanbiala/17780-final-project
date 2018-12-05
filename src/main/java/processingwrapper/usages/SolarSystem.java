@@ -7,52 +7,51 @@ import java.awt.*;
 
 public class SolarSystem implements ProcessingApp {
 
-  static final double DEGREES_IN_A_CIRCLE = 360;
-  static final double DAYS_IN_A_VENUS_YEAR = 225;
-  static final double DAYS_IN_A_YEAR = 365.25;
-  static final double MONTHS_IN_A_YEAR = 12;
-  static final double DAYS_IN_A_MONTH = DAYS_IN_A_YEAR/MONTHS_IN_A_YEAR;
+  private static final double
+    DEGREES_IN_A_CIRCLE = 360,
+    DAYS_IN_A_VENUS_YEAR = 225,
+    DAYS_IN_A_YEAR = 365.25,
+    MONTHS_IN_A_YEAR = 12,
+    DAYS_IN_A_MONTH = DAYS_IN_A_YEAR/MONTHS_IN_A_YEAR;
 
-  float SUN_RADIUS, VENUS_RADIUS, EARTH_RADIUS, MOON_RADIUS, VENUS_ORBIT_RADIUS, EARTH_ORBIT_RADIUS, MOON_ORBIT_RADIUS;
-  int earthOrbitCanvasSize;
-  double venusAngleDeg, earthAngleDeg, moonAngleDeg;
+  private final double venusOrbitRadius, earthOrbitRadius, moonOrbitRadius;
+  private double venusAngleDeg, earthAngleDeg, moonAngleDeg;
 
-  Position center, venusCenter, earthOrbitCanvasCenter, earthCenter, moonCenter;
-  Canvas earthOrbitCanvas;
+  private final Position center, earthCenter;
+  private final Canvas earthOrbitCanvas;
 
-  Circle sun, venus, earth, moon;
-  ShapeSettings sunProperties = ShapeSettings.createWithFill(Color.ORANGE);
-  ShapeSettings venusProperties = ShapeSettings.createWithFill(Color.RED);
-  ShapeSettings earthProperties = ShapeSettings.createWithFill(Color.BLUE);
-  ShapeSettings moonProperties = ShapeSettings.createWithFill(Color.GRAY);
+  private final Drawable sun, venus, earth, moon;
+  private static final ShapeSettings
+    SUN_PROPERTIES = ShapeSettings.createWithFill(Color.ORANGE),
+    VENUS_PROPERTIES = ShapeSettings.createWithFill(Color.RED),
+    EARTH_PROPERTIES = ShapeSettings.createWithFill(Color.BLUE),
+    MOON_PROPERTIES = ShapeSettings.createWithFill(Color.GRAY);
 
   public SolarSystem(int width, int height) {
-    SUN_RADIUS = width/10;
-    VENUS_RADIUS = SUN_RADIUS/5.2f;
-    EARTH_RADIUS = SUN_RADIUS/5;
-    MOON_RADIUS = EARTH_RADIUS/3;
+    double sunRadius = width/10;
+    double venusRadius = sunRadius/5.2f;
+    double earthRadius = sunRadius/5;
+    double moonRadius = earthRadius/3;
 
-    VENUS_ORBIT_RADIUS = Math.abs(3.25f*SUN_RADIUS);
-    EARTH_ORBIT_RADIUS = Math.abs(4*SUN_RADIUS);
-    MOON_ORBIT_RADIUS = EARTH_RADIUS + 2*MOON_RADIUS;
+    venusOrbitRadius = Math.abs(3.25f*sunRadius);
+    earthOrbitRadius = Math.abs(4*sunRadius);
+    moonOrbitRadius = earthRadius + 2*moonRadius;
 
-    earthOrbitCanvasSize = (int) (3*EARTH_RADIUS + 2*MOON_RADIUS);
+    int earthOrbitCanvasSize = (int) (3*earthRadius + 2*moonRadius);
     venusAngleDeg = 0;
     earthAngleDeg = 0;
     moonAngleDeg = 0;
 
     center = Position.centeredAt(width/2, height/2);
-    venusCenter = center.translateBy((float) (VENUS_ORBIT_RADIUS*Math.cos(Math.toRadians(venusAngleDeg))), (float) (VENUS_ORBIT_RADIUS*Math.sin(Math.toRadians(venusAngleDeg))));
-    earthCenter = Position.centeredAt(earthOrbitCanvasSize/2, earthOrbitCanvasSize/2);
-
-    earthOrbitCanvasCenter = center.translateBy((float) (EARTH_ORBIT_RADIUS*Math.cos(Math.toRadians(earthAngleDeg))), (float) (EARTH_ORBIT_RADIUS*Math.sin(Math.toRadians(earthAngleDeg))));
-    moonCenter = earthCenter.translateBy((float) (MOON_ORBIT_RADIUS*Math.cos(Math.toRadians(moonAngleDeg))), (float) (MOON_ORBIT_RADIUS*Math.sin(Math.toRadians(moonAngleDeg))));
     earthOrbitCanvas = new Canvas(earthOrbitCanvasSize, earthOrbitCanvasSize);
+    earthCenter = Position.centeredAt(earthOrbitCanvasSize / 2, earthOrbitCanvasSize / 2);
 
-    sun = Circle.of(SUN_RADIUS);
-    venus = Circle.of(VENUS_RADIUS);
-    earth = Circle.of(EARTH_RADIUS);
-    moon = Circle.of(MOON_RADIUS);
+    // Since we are frequently drawing the sun with the same properties, we package together
+    // the shape and its properties.
+    sun = Drawable.ofShape(Circle.of(sunRadius), SUN_PROPERTIES);
+    venus = Drawable.ofShape(Circle.of(venusRadius), VENUS_PROPERTIES);
+    earth = Drawable.ofShape(Circle.of(earthRadius), EARTH_PROPERTIES);
+    moon = Drawable.ofShape(Circle.of(moonRadius), MOON_PROPERTIES);
   }
 
   /**
@@ -62,18 +61,24 @@ public class SolarSystem implements ProcessingApp {
    */
   @Override
   public void drawFrame(Canvas mainCanvas) {
-    venusCenter = center.translateBy((float) (VENUS_ORBIT_RADIUS*Math.cos(Math.toRadians(venusAngleDeg))), (float) (VENUS_ORBIT_RADIUS*Math.sin(Math.toRadians(venusAngleDeg))));
-    earthOrbitCanvasCenter = center.translateBy((float) (EARTH_ORBIT_RADIUS*Math.cos(Math.toRadians(earthAngleDeg))), (float) (EARTH_ORBIT_RADIUS*Math.sin(Math.toRadians(earthAngleDeg))));
-    moonCenter = earthCenter.translateBy((float) (MOON_ORBIT_RADIUS*Math.cos(Math.toRadians(moonAngleDeg))), (float) (MOON_ORBIT_RADIUS*Math.sin(Math.toRadians(moonAngleDeg))));
+    Position venusCenter = center.translateBy(
+        venusOrbitRadius * Math.cos(Math.toRadians(venusAngleDeg)),
+        venusOrbitRadius * Math.sin(Math.toRadians(venusAngleDeg)));
+    Position earthOrbitCanvasCenter = center.translateBy(
+        earthOrbitRadius * Math.cos(Math.toRadians(earthAngleDeg)),
+        earthOrbitRadius * Math.sin(Math.toRadians(earthAngleDeg)));
+    Position moonCenter = earthCenter.translateBy(
+        moonOrbitRadius * Math.cos(Math.toRadians(moonAngleDeg)),
+        moonOrbitRadius * Math.sin(Math.toRadians(moonAngleDeg)));
 
-    mainCanvas.draw(sun, sunProperties, center);
-    mainCanvas.draw(venus, venusProperties, venusCenter);
-    earthOrbitCanvas.draw(earth, earthProperties, earthCenter);
-    earthOrbitCanvas.draw(moon, moonProperties, moonCenter);
+    mainCanvas.draw(sun, center);
+    mainCanvas.draw(venus, venusCenter);
+    earthOrbitCanvas.draw(earth, earthCenter);
+    earthOrbitCanvas.draw(moon, moonCenter);
     mainCanvas.draw(earthOrbitCanvas, earthOrbitCanvasCenter);
-    venusAngleDeg += DEGREES_IN_A_CIRCLE/DAYS_IN_A_VENUS_YEAR;
-    earthAngleDeg += DEGREES_IN_A_CIRCLE/DAYS_IN_A_YEAR;
-    moonAngleDeg += DEGREES_IN_A_CIRCLE/DAYS_IN_A_MONTH;
+    venusAngleDeg += DEGREES_IN_A_CIRCLE / DAYS_IN_A_VENUS_YEAR;
+    earthAngleDeg += DEGREES_IN_A_CIRCLE / DAYS_IN_A_YEAR;
+    moonAngleDeg += DEGREES_IN_A_CIRCLE / DAYS_IN_A_MONTH;
   }
 
   public static void main(String[] args) {
