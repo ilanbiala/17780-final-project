@@ -8,10 +8,10 @@ import java.awt.Color;
  * modifications will return a new instance.
  */
 public class ShapeSettings {
-  private static final Color NO_COLOR = new Color(0, 0, 0, 255);
+  private static final Color NO_COLOR = new Color(0, 0, 0, 0);
 
   private final Color fillColor;
-  private final float strokeWeight;
+  private final double strokeWeight;
   private final Color strokeColor;
 
   private ShapeSettings(Color fillColor) {
@@ -20,13 +20,13 @@ public class ShapeSettings {
     this.strokeColor = NO_COLOR;
   }
 
-  private ShapeSettings(float strokeWeight, Color strokeColor) {
+  private ShapeSettings(double strokeWeight, Color strokeColor) {
     this.fillColor = NO_COLOR;
     this.strokeWeight = strokeWeight;
     this.strokeColor = strokeColor;
   }
 
-  private ShapeSettings(Color fillColor, float strokeWeight, Color strokeColor) {
+  private ShapeSettings(Color fillColor, double strokeWeight, Color strokeColor) {
     this.fillColor = fillColor;
     this.strokeWeight = strokeWeight;
     this.strokeColor = strokeColor;
@@ -42,7 +42,7 @@ public class ShapeSettings {
   /**
    * @return The stroke weight of this {@link ShapeSettings} instance.
    */
-  public float strokeWeight() {
+  public double strokeWeight() {
     return strokeWeight;
   }
 
@@ -80,7 +80,7 @@ public class ShapeSettings {
    * @param strokeColor  The stroke color to set.
    * @return A new {@link ShapeSettings} instance.
    */
-  public static ShapeSettings createWithStroke(float strokeWeight, Color strokeColor) {
+  public static ShapeSettings createWithStroke(double strokeWeight, Color strokeColor) {
     return new ShapeSettings(strokeWeight, strokeColor);
   }
 
@@ -92,7 +92,7 @@ public class ShapeSettings {
    * @param strokeColor  The stroke color to set.
    * @return A new {@link ShapeSettings} instance.
    */
-  public ShapeSettings withStroke(float strokeWeight, Color strokeColor) {
+  public ShapeSettings withStroke(double strokeWeight, Color strokeColor) {
     return new ShapeSettings(this.fillColor, strokeWeight, strokeColor);
   }
 }

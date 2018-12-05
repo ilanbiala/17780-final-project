@@ -119,13 +119,14 @@ public class Canvas {
   // Not externally accessible! Just used by us when committing to the actual canvas.
   private void setGlobalShapeSettings(PApplet app, ShapeSettings settings) {
     if (settings.strokeWeight() != 0) {
-      app.strokeWeight(settings.strokeWeight());
+      app.strokeWeight((float) settings.strokeWeight());
       app.stroke(settings.strokeColor().getRGB());
     } else {
       app.noStroke();
     }
+    java.awt.Color c = settings.fillColor();
     app.colorMode(PApplet.RGB);
-    app.fill(settings.fillColor().getRGB());
+    app.fill(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha());
   }
 
   // Internally-used function that flushes the drawn entities out to the screen.
