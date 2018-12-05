@@ -126,6 +126,7 @@ public class Canvas {
 
     this.drawables.clear();
     this.positions.clear();
+    this.backgroundColor = null;
   }
 
   public int width() {

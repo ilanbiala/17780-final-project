@@ -29,11 +29,13 @@ public interface ProcessingApp {
 
       @Override
       public void setup() {
+        this.background(255);
         app = appConstructor.apply(windowWidth, windowHeight);
       }
 
       @Override
       public void draw() {
+        this.background(255);
         app.drawFrame(mainCanvas);
         mainCanvas.commitAt(this, 0, 0);
       }
