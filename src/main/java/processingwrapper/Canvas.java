@@ -123,6 +123,9 @@ public class Canvas {
           break;
       }
     }
+
+    this.drawables.clear();
+    this.positions.clear();
   }
 
   public int width() {
