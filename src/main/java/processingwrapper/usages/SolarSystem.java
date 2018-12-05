@@ -43,7 +43,7 @@ public class SolarSystem implements ProcessingApp {
     moonAngleDeg = 0;
 
     center = Position.centeredAt(width/2, height/2);
-    earthOrbitCanvas = new Canvas(earthOrbitCanvasSize, earthOrbitCanvasSize);
+    earthOrbitCanvas = Canvas.of(earthOrbitCanvasSize, earthOrbitCanvasSize);
     earthCenter = Position.centeredAt(earthOrbitCanvasSize / 2, earthOrbitCanvasSize / 2);
 
     // Since we are frequently drawing the sun with the same properties, we package together

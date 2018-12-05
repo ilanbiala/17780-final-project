@@ -155,7 +155,7 @@ public class Canvas {
     }
 
     // Only allow drawing within a subrectangle.
-    app.rectMode(PApplet.CORNER);
+    app.imageMode(PApplet.CORNER);
     app.clip(xLo, yLo, effectiveWidth, effectiveHeight);
 
     for (int i = 0; i < drawables.size(); i++) {
@@ -172,13 +172,13 @@ public class Canvas {
           app.imageMode(drawMode.processingDrawMode());
           if (imgSettingsOpt.isPresent()) {
             var imgSettings = imgSettingsOpt.get();
-            app.image(pimg, 
-                (float) (x + pos.x()),
-                (float) (y + pos.y()),
+            app.image(image, 
+                (float) (xLo + pos.x()),
+                (float) (yLo + pos.y()),
                 (float) imgSettings.width(),
                 (float) imgSettings.height());
           } else {
-            app.image(pimg, (float) (x + pos.x()), (float) (y + pos.y()));
+            app.image(image, (float) (xLo + pos.x()), (float) (yLo + pos.y()));
           }
           break;
         }
@@ -188,8 +188,8 @@ public class Canvas {
           app.ellipseMode(drawMode.processingDrawMode());
           Shape shape = drawable.shape();
           app.ellipse(
-              (float) (x + pos.x()),
-              (float) (y + pos.y()),
+              (float) (xLo + pos.x()),
+              (float) (yLo + pos.y()),
               (float) shape.width(),
               (float) shape.height());
           break;
@@ -200,8 +200,8 @@ public class Canvas {
           app.rectMode(drawMode.processingDrawMode());
           Shape shape = drawable.shape();
           app.rect(
-              (float) (x + pos.x()),
-              (float) (y + pos.y()),
+              (float) (xLo + pos.x()),
+              (float) (yLo + pos.y()),
               (float) shape.width(),
               (float) shape.height());
           break;
@@ -233,7 +233,7 @@ public class Canvas {
           seen.remove(canvas);
 
           // We have to re-set clip after recursive call to the canvas.
-          app.rectMode(PApplet.CORNER);
+          app.imageMode(PApplet.CORNER);
           app.clip(xLo, yLo, effectiveWidth, effectiveHeight);
           break;
       }
