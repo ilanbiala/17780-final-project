@@ -7,15 +7,19 @@ import java.awt.*;
 
 public class SolarSystem implements ProcessingApp {
 
-  float SUN_RADIUS, EARTH_RADIUS, MOON_RADIUS;
-  int earthOrbitCanvasSize;
+  static final double DEGREES_IN_A_CIRCLE = 360;
+  static final double DAYS_IN_A_YEAR = 365.25;
+  static final double MONTHS_IN_A_YEAR = 12;
+  static final double DAYS_IN_A_MONTH = DAYS_IN_A_YEAR/MONTHS_IN_A_YEAR;
 
-  Position center, earthOrbitCanvasCenter, earthCenter;
+  float SUN_RADIUS, EARTH_RADIUS, MOON_RADIUS, EARTH_ORBIT_RADIUS, MOON_ORBIT_RADIUS;
+  int earthOrbitCanvasSize;
+  double earthAngleDeg, moonAngleDeg;
+
+  Position center, earthOrbitCanvasCenter, earthCenter, moonCenter;
   Canvas earthOrbitCanvas;
 
-  Circle sun;
-  Circle earth;
-  Circle moon;
+  Circle sun, earth, moon;
   ShapeSettings sunProperties = ShapeSettings.createWithFill(Color.ORANGE);
   ShapeSettings earthProperties = ShapeSettings.createWithFill(Color.BLUE);
   ShapeSettings moonProperties = ShapeSettings.createWithFill(Color.GRAY);
@@ -25,10 +29,18 @@ public class SolarSystem implements ProcessingApp {
     EARTH_RADIUS = SUN_RADIUS/5;
     MOON_RADIUS = EARTH_RADIUS/3;
     earthOrbitCanvasSize = (int) (3*EARTH_RADIUS + 2*MOON_RADIUS);
+    earthAngleDeg = 0;
+    moonAngleDeg = 0;
 
     center = Position.centeredAt(width/2, height/2);
-    earthOrbitCanvasCenter = center.translateBy(0, 2*SUN_RADIUS);
-    earthCenter = earthOrbitCanvasCenter.translateBy(0, 0);
+    earthCenter = Position.centeredAt(earthOrbitCanvasSize/2, earthOrbitCanvasSize/2);
+
+    EARTH_ORBIT_RADIUS = Math.abs(4*SUN_RADIUS);
+    MOON_ORBIT_RADIUS = EARTH_RADIUS + 2*MOON_RADIUS;
+
+    earthOrbitCanvasCenter = center.translateBy((float) (EARTH_ORBIT_RADIUS*Math.cos(Math.toRadians(earthAngleDeg))), (float) (EARTH_ORBIT_RADIUS*Math.sin(Math.toRadians(earthAngleDeg))));
+    moonCenter = earthCenter.translateBy((float) (MOON_ORBIT_RADIUS*Math.cos(Math.toRadians(moonAngleDeg))), (float) (MOON_ORBIT_RADIUS*Math.sin(Math.toRadians(moonAngleDeg))));
+//    moonCenter = earthCenter.translateBy(0, EARTH_RADIUS + 2*MOON_RADIUS);
     earthOrbitCanvas = new Canvas(earthOrbitCanvasSize, earthOrbitCanvasSize);
 
     sun = Circle.of(SUN_RADIUS);
@@ -43,14 +55,19 @@ public class SolarSystem implements ProcessingApp {
    */
   @Override
   public void drawFrame(Canvas mainCanvas) {
+    earthOrbitCanvasCenter = center.translateBy((float) (EARTH_ORBIT_RADIUS*Math.cos(Math.toRadians(earthAngleDeg))), (float) (EARTH_ORBIT_RADIUS*Math.sin(Math.toRadians(earthAngleDeg))));
+    moonCenter = earthCenter.translateBy((float) (MOON_ORBIT_RADIUS*Math.cos(Math.toRadians(moonAngleDeg))), (float) (MOON_ORBIT_RADIUS*Math.sin(Math.toRadians(moonAngleDeg))));
+
     mainCanvas.draw(sun, sunProperties, center);
-    mainCanvas.draw(earth, earthProperties, earthOrbitCanvasCenter);
-    earthOrbitCanvas.draw(earth, earthProperties, Position.centeredAt(0, 0));
+    earthOrbitCanvas.draw(earth, earthProperties, earthCenter);
+    earthOrbitCanvas.draw(moon, moonProperties, moonCenter);
     mainCanvas.draw(earthOrbitCanvas, earthOrbitCanvasCenter);
+    earthAngleDeg += DEGREES_IN_A_CIRCLE/DAYS_IN_A_YEAR;
+    moonAngleDeg += DEGREES_IN_A_CIRCLE/DAYS_IN_A_MONTH;
   }
 
   public static void main(String[] args) {
-    int width = 800;
+    int width = 600;
     int height = 600;
 
     ProcessingApp.start(SolarSystem::new, width, height);
