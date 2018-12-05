@@ -40,6 +40,27 @@ public class ImageSettings {
   }
 
   /**
+   * @return The tint of this {@link ImageSettings} instance.
+   */
+  public Color tint() {
+    return tint;
+  }
+
+  /**
+   * @return The width of this {@link ImageSettings} instance.
+   */
+  public float width() {
+    return width;
+  }
+
+  /**
+   * @return The height of this {@link ImageSettings} instance.
+   */
+  public float height() {
+    return height;
+  }
+
+  /**
    * Creates an {@link ImageSettings} instance with the given tint.
    *
    * @param tint The tint to set.
