@@ -90,7 +90,7 @@ public class Canvas {
     Objects.requireNonNull(img);
     Objects.requireNonNull(imgSettings);
     Objects.requireNonNull(pos);
-    drawables.add(Drawable.ofImage(img));
+    drawables.add(Drawable.ofImage(img, imgSettings));
     positions.add(pos);
   }
 
@@ -239,8 +239,9 @@ public class Canvas {
       }
     }
 
-    this.drawables.clear();
-    this.positions.clear();
-    this.backgroundColor = null;
+    // Clear canvas after commit.
+    drawables.clear();
+    positions.clear();
+    backgroundColor = null;
   }
 }

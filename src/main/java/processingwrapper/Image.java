@@ -26,7 +26,7 @@ public class Image {
       this.width = image.getWidth();
       this.height = image.getHeight();
     } catch (IOException e) {
-      throw new IllegalArgumentException("file", e);
+      throw new IllegalArgumentException("file: " + file, e);
     }
   }
   
