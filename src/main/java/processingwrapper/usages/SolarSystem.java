@@ -7,17 +7,32 @@ import java.awt.*;
 
 public class SolarSystem implements ProcessingApp {
 
-  float SUN_RADIUS;
+  float SUN_RADIUS, EARTH_RADIUS, MOON_RADIUS;
+  int earthOrbitCanvasSize;
 
-  Position center;
+  Position center, earthOrbitCanvasCenter;
+  Canvas earthOrbitCanvas;
+
   Circle sun;
+  Circle earth;
+  Circle moon;
   ShapeSettings sunProperties = ShapeSettings.createWithFill(Color.ORANGE);
+  ShapeSettings earthProperties = ShapeSettings.createWithFill(Color.BLUE);
+  ShapeSettings moonProperties = ShapeSettings.createWithFill(Color.GRAY);
 
   public SolarSystem(int width, int height) {
     SUN_RADIUS = width/10;
+    EARTH_RADIUS = SUN_RADIUS/5;
+    MOON_RADIUS = EARTH_RADIUS/3;
+    earthOrbitCanvasSize = (int) (3*EARTH_RADIUS + 2*MOON_RADIUS);
 
     center = Position.centeredAt(width/2, height/2);
+    earthOrbitCanvasCenter = center.translateBy(0, 2*SUN_RADIUS);
+    earthOrbitCanvas = new Canvas(earthOrbitCanvasSize, earthOrbitCanvasSize);
+
     sun = Circle.of(SUN_RADIUS);
+    earth = Circle.of(EARTH_RADIUS);
+    moon = Circle.of(MOON_RADIUS);
   }
 
   /**
@@ -28,6 +43,9 @@ public class SolarSystem implements ProcessingApp {
   @Override
   public void drawFrame(Canvas mainCanvas) {
     mainCanvas.draw(sun, sunProperties, center);
+//    mainCanvas.draw(earth, earthProperties, earthOrbitCanvasCenter);
+    earthOrbitCanvas.draw(earth, earthProperties, earthOrbitCanvasCenter);
+    mainCanvas.draw(earthOrbitCanvas, earthOrbitCanvasCenter);
   }
 
   public static void main(String[] args) {
