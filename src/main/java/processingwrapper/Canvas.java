@@ -108,7 +108,18 @@ public class Canvas {
         }
 
         case CANVAS:
-          drawable.canvas().commitAt(app, (int) (x + pos.x()), (int) (y + pos.y()));
+          switch (pos.drawMode()) {
+
+            case TOP_LEFT_CORNER:
+              drawable.canvas().commitAt(app, (int) (x + pos.x()), (int) (y + pos.y()));
+              break;
+            case CENTER:
+              float xpos = x + pos.x() - (float) drawable.canvas().width() / 2;
+              float ypos = y + pos.y() - (float) drawable.canvas().height() / 2;
+
+              drawable.canvas().commitAt(app, (int) (xpos), (int) (ypos));
+              break;
+          }
           break;
       }
     }
