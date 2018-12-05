@@ -49,7 +49,7 @@ public interface ProcessingApp {
     String[] args = {"--location=0,0", "WrapperPApplet"};
     PApplet.runSketch(args, new WrapperPApplet());
   }
-  
+
   /**
    * Draw a frame to the canvas
    *
