@@ -2,6 +2,7 @@ package processingwrapper;
 
 import processing.core.PApplet;
 
+import java.util.Objects;
 import java.util.function.BiFunction;
 
 /**
@@ -9,15 +10,21 @@ import java.util.function.BiFunction;
  * {@link #start } should be called to begin running a ProcessingApp
  */
 public interface ProcessingApp {
+
   /**
-   * Starts running the supplied ProcessingApp
+   * Starts running the supplied ProcessingApp.
+   * 
+   * The most common usage pattern for this will be: {@code start(MyApp::new, width, height)},
+   * where {@code MyApp} is a class with a constructor that takes the width and height
+   * as parameters.
    *
    * @param appConstructor A constructor which creates a ProcessingApp given the width and height
    * @param windowWidth    The window width
    * @param windowHeight   The window height
    */
   static void start(BiFunction<Integer, Integer, ProcessingApp> appConstructor, int windowWidth, int windowHeight) {
-    Canvas mainCanvas = new Canvas(windowWidth, windowHeight);
+    Objects.requireNonNull(appConstructor);
+    Canvas mainCanvas = Canvas.of(windowWidth, windowHeight);
 
     class WrapperPApplet extends PApplet {
       private ProcessingApp app;
@@ -37,7 +44,7 @@ public interface ProcessingApp {
       public void draw() {
         this.background(255);
         app.drawFrame(mainCanvas);
-        mainCanvas.commitAt(this, 0, 0);
+        mainCanvas.commit(this);
       }
     }
 
