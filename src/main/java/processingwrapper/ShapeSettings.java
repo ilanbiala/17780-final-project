@@ -33,6 +33,27 @@ public class ShapeSettings {
   }
 
   /**
+   * @return The fill color of this {@link ShapeSettings} instance.
+   */
+  public Color fillColor() {
+    return fillColor;
+  }
+
+  /**
+   * @return The stroke weight of this {@link ShapeSettings} instance.
+   */
+  public float strokeWeight() {
+    return strokeWeight;
+  }
+
+  /**
+   * @return The stroke color of this {@link ShapeSettings} instance.
+   */
+  public Color strokeColor() {
+    return strokeColor;
+  }
+
+  /**
    * Creates a {@link ShapeSettings} instance with the given fill color.
    *
    * @param fillColor The fill color to set.
