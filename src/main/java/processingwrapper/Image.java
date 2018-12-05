@@ -16,8 +16,8 @@ public class Image {
   
   // Package-private so it can be drawn from another class.
   final PImage image;
-  private final float width;
-  private final float height;    
+  private final double width;
+  private final double height;    
 
   private Image(String file) {
     try {
@@ -41,12 +41,12 @@ public class Image {
   }
   
   /** @return the width (x-dimension) of the image before scaling. */
-  public float width() {
+  public double width() {
     return width;
   }
 
   /** @return the height (y-dimension) of the image before scaling. */
-  public float height() {
+  public double height() {
     return height;
   }
 

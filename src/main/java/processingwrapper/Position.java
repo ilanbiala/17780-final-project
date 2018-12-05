@@ -27,10 +27,10 @@ public class Position {
   }
 
   private final DrawMode drawMode;
-  private final float x;
-  private final float y;
+  private final double x;
+  private final double y;
 
-  private Position(float x, float y, DrawMode drawMode) {
+  private Position(double x, double y, DrawMode drawMode) {
     this.x = x;
     this.y = y;
     this.drawMode = drawMode;
@@ -39,14 +39,14 @@ public class Position {
   /**
    * @return the x-coordinate of this {@link Position} instance.
    */
-  public float x() {
+  public double x() {
     return x;
   }
 
   /**
    * @return the y-coordinate of this {@link Position} instance.
    */
-  public float y() {
+  public double y() {
     return y;
   }
 
@@ -64,7 +64,7 @@ public class Position {
    * @param y The y-coordinate of the center of the object to be drawn.
    * @return A {@link Position} instance.
    */
-  public static Position centeredAt(float x, float y) {
+  public static Position centeredAt(double x, double y) {
     return new Position(x, y, DrawMode.CENTER);
   }
 
@@ -75,7 +75,7 @@ public class Position {
    * @param y The y-coordinate of the top left corner of the object to be drawn.
    * @return A {@link Position} instance.
    */
-  public static Position topLeftCornerAt(float x, float y) {
+  public static Position topLeftCornerAt(double x, double y) {
     return new Position(x, y, DrawMode.TOP_LEFT_CORNER);
   }
 
@@ -86,7 +86,7 @@ public class Position {
    * @param dy The delta in the vertical direction to translate the object by.
    * @return A new {@link Position} instance.
    */
-  public Position translateBy(float dx, float dy) {
+  public Position translateBy(double dx, double dy) {
     return new Position(this.x + dx, this.y + dy, this.drawMode);
   }
 }

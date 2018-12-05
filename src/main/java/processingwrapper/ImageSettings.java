@@ -15,11 +15,11 @@ public class ImageSettings {
   private static final Color NO_TINT = Color.WHITE;
   // If the user creates an ImageSettings instance without specifying the
   // size, we'll be able to check for NaN and use the loaded image's size.
-  private static final float DEFAULT_SIZE = NaN;
+  private static final double DEFAULT_SIZE = NaN;
 
   private final Color tint;
-  private final float width;
-  private final float height;
+  private final double width;
+  private final double height;
 
   private ImageSettings(Color tint) {
     this.tint = tint;
@@ -27,13 +27,13 @@ public class ImageSettings {
     this.height = DEFAULT_SIZE;
   }
 
-  private ImageSettings(float width, float height) {
+  private ImageSettings(double width, double height) {
     this.tint = NO_TINT;
     this.width = width;
     this.height = height;
   }
 
-  private ImageSettings(Color tint, float width, float height) {
+  private ImageSettings(Color tint, double width, double height) {
     this.tint = tint;
     this.width = width;
     this.height = height;
@@ -49,14 +49,14 @@ public class ImageSettings {
   /**
    * @return The width of this {@link ImageSettings} instance.
    */
-  public float width() {
+  public double width() {
     return width;
   }
 
   /**
    * @return The height of this {@link ImageSettings} instance.
    */
-  public float height() {
+  public double height() {
     return height;
   }
 
@@ -87,7 +87,7 @@ public class ImageSettings {
    * @param height the height to set.
    * @return A new {@link ImageSettings} instance.
    */
-  public static ImageSettings createWithSize(float width, float height) {
+  public static ImageSettings createWithSize(double width, double height) {
     return new ImageSettings(width, height);
   }
 
@@ -99,7 +99,7 @@ public class ImageSettings {
    * @param height the height to set.
    * @return A new {@link ImageSettings} instance.
    */
-  public ImageSettings withSize(float width, float height) {
+  public ImageSettings withSize(double width, double height) {
     return new ImageSettings(this.tint, width, height);
   }
 }

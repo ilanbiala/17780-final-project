@@ -15,27 +15,27 @@ import java.util.Objects;
 public abstract class Shape {
 	// Package-private constructor means that the only subclasses
 	// of Shape belong to the processingwrapper package.
-	Shape(float width, float height) {
+	Shape(double width, double height) {
 	  assert(isPositive(width));
 	  assert(isPositive(height));
 	  this.width = width;
 	  this.height = height;
 	}
 	
-	final protected float width;
-	final protected float height;
+	final protected double width;
+	final protected double height;
 	
   /**
    * @return the width (x dimension) of the shape.
    */
-  public float width() {
+  public double width() {
     return width;
   }
   
   /**
    * @return the height (y dimension) of the shape.
    */
-  public float height() {
+  public double height() {
     return height;
   }
   
@@ -44,9 +44,9 @@ public abstract class Shape {
     return Objects.hash(width, height);
   }
   
-	// Return if a float is positive (i.e. finite and greater than 0.)
-  static boolean isPositive(float f) {
-    return Float.isFinite(f) && f > 0.0f;
+	// Return if a double is positive (i.e. finite and greater than 0.)
+  static boolean isPositive(double f) {
+    return Double.isFinite(f) && f > 0.0;
   }
 	
 	/**

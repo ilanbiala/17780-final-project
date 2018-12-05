@@ -76,9 +76,13 @@ public class Canvas {
 
           if (imgSettingsOpt.isPresent()) {
             var imgSettings = imgSettingsOpt.get();
-            app.image(pimg, x + pos.x(), y + pos.y(), imgSettings.width(), imgSettings.height());
+            app.image(pimg, 
+                (float) (x + pos.x()),
+                (float) (y + pos.y()),
+                (float) imgSettings.width(),
+                (float) imgSettings.height());
           } else {
-            app.image(pimg, x + pos.x(), y + pos.y());
+            app.image(pimg, (float) (x + pos.x()), (float) (y + pos.y()));
           }
           break;
         }
@@ -91,7 +95,11 @@ public class Canvas {
           app.fill(settings.fillColor().getRGB());
 
           app.ellipseMode(pos.drawMode().processingDrawMode());
-          app.ellipse(x + pos.x(), y + pos.y(), drawable.shape().width(), drawable.shape().height());
+          app.ellipse(
+              (float) (x + pos.x()),
+              (float) (y + pos.y()),
+              (float) drawable.shape().width(),
+              (float) drawable.shape().height());
           break;
         }
 
@@ -103,7 +111,11 @@ public class Canvas {
           app.fill(settings.fillColor().getRGB());
 
           app.rectMode(pos.drawMode().processingDrawMode());
-          app.rect(x + pos.x(), y + pos.y(), drawable.shape().width(), drawable.shape().height());
+          app.rect(
+              (float) (x + pos.x()),
+              (float) (y + pos.y()),
+              (float) drawable.shape().width(),
+              (float) drawable.shape().height());
           break;
         }
 
@@ -114,10 +126,9 @@ public class Canvas {
               drawable.canvas().commitAt(app, (int) (x + pos.x()), (int) (y + pos.y()));
               break;
             case CENTER:
-              float xpos = x + pos.x() - (float) drawable.canvas().width() / 2;
-              float ypos = y + pos.y() - (float) drawable.canvas().height() / 2;
-
-              drawable.canvas().commitAt(app, (int) (xpos), (int) (ypos));
+              double xpos = x + pos.x() - drawable.canvas().width() / 2;
+              double ypos = y + pos.y() - drawable.canvas().height() / 2;
+              drawable.canvas().commitAt(app, (int) xpos, (int) ypos);
               break;
           }
           break;

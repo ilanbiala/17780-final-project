@@ -11,16 +11,16 @@ import java.util.Objects;
  */
 public class Rectangle extends Shape {
   
-  private Rectangle(float width, float height) {
+  private Rectangle(double width, double height) {
     super(width, height);
   }
 
   /**
    * Create a new rectangle with the specified width and height.
    * @throws IllegalArgumentException if the width and height are not
-   *   positive, finite floats.
+   *   positive, finite doubles.
    */
-  public static Rectangle of(float width, float height) {
+  public static Rectangle of(double width, double height) {
     if (!isPositive(width)) throw new IllegalArgumentException("width");
     if (!isPositive(height)) throw new IllegalArgumentException("height");
     return new Rectangle(width, height);

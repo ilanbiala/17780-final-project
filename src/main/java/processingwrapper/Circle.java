@@ -9,9 +9,9 @@ package processingwrapper;
  */
 public class Circle extends Ellipse {
  
-  private final float radius;
+  private final double radius;
   
-  private Circle(float radius) {
+  private Circle(double radius) {
     super(2*radius, 2*radius);
     assert(isPositive(radius));
     this.radius = radius;
@@ -20,7 +20,7 @@ public class Circle extends Ellipse {
   /**
    * Create a new circle with the specified radius.
    */
-  public static Circle of(float radius) {
+  public static Circle of(double radius) {
     if (!isPositive(radius)) throw new IllegalArgumentException("radius");
     return new Circle(radius);
   }
@@ -28,7 +28,7 @@ public class Circle extends Ellipse {
   /**
    * @return the radius of the circle.
    */
-  public float radius() {
+  public double radius() {
     return radius;
   }
 
