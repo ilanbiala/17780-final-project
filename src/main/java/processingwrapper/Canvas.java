@@ -1,7 +1,11 @@
 package processingwrapper;
 
+import processing.core.PApplet;
+import processing.core.PImage;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Canvas {
   private int width, height;
@@ -14,6 +18,7 @@ public class Canvas {
     this.height = height;
     this.drawables = new ArrayList<>();
     this.positions = new ArrayList<>();
+    this.backgroundColor = null;
   }
 
   public void draw(Drawable drawable, Position pos) {
@@ -47,13 +52,72 @@ public class Canvas {
     this.backgroundColor = color;
   }
 
-  void commitAt(int x, int y) {
+  void commitAt(PApplet app, int x, int y) {
+    assert (drawables.size() == positions.size());
 
+//    app.imageMode(app.CORNER);
+//    app.clip(x, y, this.width, this.height);
+
+    if (this.backgroundColor != null) {
+      app.rectMode(app.CORNER);
+      app.fill(this.backgroundColor.getRGB());
+      app.rect(x, y, this.width, this.height);
+    }
+
+    for (int i = 0; i < drawables.size(); i++) {
+      Drawable drawable = drawables.get(i);
+      Position pos = positions.get(i);
+
+      switch (drawable.type()) {
+        case IMAGE: {
+          Optional<ImageSettings> imgSettingsOpt = drawable.imageSettings();
+          PImage pimg = drawable.image().image;
+          app.imageMode(pos.drawMode().processingDrawMode());
+
+          if (imgSettingsOpt.isPresent()) {
+            var imgSettings = imgSettingsOpt.get();
+            app.image(pimg, x + pos.x(), y + pos.y(), imgSettings.width(), imgSettings.height());
+          } else {
+            app.image(pimg, x + pos.x(), y + pos.y());
+          }
+          break;
+        }
+
+        case ELLIPSE: {
+          var settings = drawable.shapeSettings();
+          app.strokeWeight(settings.strokeWeight());
+          app.colorMode(app.RGB);
+          app.stroke(settings.strokeColor().getRGB());
+          app.fill(settings.fillColor().getRGB());
+
+          app.ellipseMode(pos.drawMode().processingDrawMode());
+          app.ellipse(x + pos.x(), y + pos.y(), drawable.shape().width(), drawable.shape().height());
+          break;
+        }
+
+        case RECTANGLE: {
+          var settings = drawable.shapeSettings();
+          app.strokeWeight(settings.strokeWeight());
+          app.colorMode(app.RGB);
+          app.stroke(settings.strokeColor().getRGB());
+          app.fill(settings.fillColor().getRGB());
+
+          app.rectMode(pos.drawMode().processingDrawMode());
+          app.rect(x + pos.x(), y + pos.y(), drawable.shape().width(), drawable.shape().height());
+          break;
+        }
+
+        case CANVAS:
+          drawable.canvas().commitAt(app, (int) (x + pos.x()), (int) (y + pos.y()));
+          break;
+      }
+    }
   }
 
   public int width() {
     return this.width;
   }
+
   public int height() {
     return this.height;
   }
