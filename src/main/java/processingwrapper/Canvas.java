@@ -172,9 +172,13 @@ public class Canvas {
           app.imageMode(drawMode.processingDrawMode());
           if (imgSettingsOpt.isPresent()) {
             var imgSettings = imgSettingsOpt.get();
-            app.image(image, xLo + pos.x(), yLo + pos.y(), imgSettings.width(), imgSettings.height());
+            app.image(pimg, 
+                (float) (x + pos.x()),
+                (float) (y + pos.y()),
+                (float) imgSettings.width(),
+                (float) imgSettings.height());
           } else {
-            app.image(image, xLo + pos.x(), yLo + pos.y());
+            app.image(pimg, (float) (x + pos.x()), (float) (y + pos.y()));
           }
           break;
         }
@@ -183,7 +187,11 @@ public class Canvas {
           setGlobalShapeSettings(app, drawable.shapeSettings());
           app.ellipseMode(drawMode.processingDrawMode());
           Shape shape = drawable.shape();
-          app.ellipse(xLo + pos.x(), yLo + pos.y(), shape.width(), shape.height());
+          app.ellipse(
+              (float) (x + pos.x()),
+              (float) (y + pos.y()),
+              (float) shape.width(),
+              (float) shape.height());
           break;
         }
 
@@ -191,13 +199,16 @@ public class Canvas {
           setGlobalShapeSettings(app, drawable.shapeSettings());
           app.rectMode(drawMode.processingDrawMode());
           Shape shape = drawable.shape();
-          app.rect(xLo + pos.x(), yLo + pos.y(), shape.width(), shape.height());
+          app.rect(
+              (float) (x + pos.x()),
+              (float) (y + pos.y()),
+              (float) shape.width(),
+              (float) shape.height());
           break;
         }
 
         case CANVAS:
           Canvas canvas = drawable.canvas();
-
           // Uh-oh!
           if (seen.contains(canvas)) {
             throw new IllegalStateException("The created main canvas has a canvas drawn as a sub-canvas of itself.");

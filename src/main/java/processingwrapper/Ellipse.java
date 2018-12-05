@@ -15,7 +15,7 @@ import java.util.Objects;
 public class Ellipse extends Shape {
  
   // package-private so that Circle can instantiate.
-  Ellipse(float width, float height) {
+  Ellipse(double width, double height) {
     super(width, height);
   }
   
@@ -24,7 +24,7 @@ public class Ellipse extends Shape {
    * @param width The x dimension of the ellipse.
    * @param height The y dimension of the ellipse.
    */
-  public static Ellipse of(float width, float height) {
+  public static Ellipse of(double width, double height) {
     if (!isPositive(width)) throw new IllegalArgumentException("width");
     if (!isPositive(height)) throw new IllegalArgumentException("height");
     return new Ellipse(width, height);
