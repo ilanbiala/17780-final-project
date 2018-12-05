@@ -10,7 +10,7 @@ public class SolarSystem implements ProcessingApp {
   float SUN_RADIUS, EARTH_RADIUS, MOON_RADIUS;
   int earthOrbitCanvasSize;
 
-  Position center, earthOrbitCanvasCenter;
+  Position center, earthOrbitCanvasCenter, earthCenter;
   Canvas earthOrbitCanvas;
 
   Circle sun;
@@ -28,6 +28,7 @@ public class SolarSystem implements ProcessingApp {
 
     center = Position.centeredAt(width/2, height/2);
     earthOrbitCanvasCenter = center.translateBy(0, 2*SUN_RADIUS);
+    earthCenter = earthOrbitCanvasCenter.translateBy(0, 0);
     earthOrbitCanvas = new Canvas(earthOrbitCanvasSize, earthOrbitCanvasSize);
 
     sun = Circle.of(SUN_RADIUS);
@@ -43,8 +44,8 @@ public class SolarSystem implements ProcessingApp {
   @Override
   public void drawFrame(Canvas mainCanvas) {
     mainCanvas.draw(sun, sunProperties, center);
-//    mainCanvas.draw(earth, earthProperties, earthOrbitCanvasCenter);
-    earthOrbitCanvas.draw(earth, earthProperties, earthOrbitCanvasCenter);
+    mainCanvas.draw(earth, earthProperties, earthOrbitCanvasCenter);
+    earthOrbitCanvas.draw(earth, earthProperties, Position.centeredAt(0, 0));
     mainCanvas.draw(earthOrbitCanvas, earthOrbitCanvasCenter);
   }
 
