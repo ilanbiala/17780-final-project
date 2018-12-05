@@ -17,12 +17,6 @@ public interface ProcessingApp {
    * @param windowHeight   The window height
    */
   static void start(BiFunction<Integer, Integer, ProcessingApp> appConstructor, int windowWidth, int windowHeight) {
-<<<<<<< HEAD
-=======
-    System.out.println("width = " + windowWidth + ", height = " + windowHeight);
-
-
->>>>>>> fix ProcessingApp
     Canvas mainCanvas = new Canvas(windowWidth, windowHeight);
 
     class WrapperPApplet extends PApplet {
