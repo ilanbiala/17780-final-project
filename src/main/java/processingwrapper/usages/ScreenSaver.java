@@ -13,7 +13,7 @@ import processingwrapper.ShapeSettings;
 public class ScreenSaver {
   
   public static void main(String[] args) {
-    ProcessingApp.start(ScreensaverApp::new, 800, 800);
+     ProcessingApp.start(ScreensaverApp::new, 800, 800);
     // Old code:
     // PApplet.main(OldScreensaverApp.class);
   }
@@ -42,7 +42,7 @@ public class ScreenSaver {
         ShapeSettings.createWithStroke(3, Color.BLUE),
         Position.centeredAt(3 * w / 4, 3 * h / 4));
       
-      box.draw(Circle.of(40),
+      box.draw(Circle.of(80),
           ShapeSettings.createWithStroke(4, Color.CYAN),
           Position.centeredAt(w / 4, h / 4));
 
@@ -83,18 +83,26 @@ public class ScreenSaver {
       int w = 200, h = 200;
       // better clear, just in case
       background(255, 255, 255);
+      
+      // We need to constrain the subcanvas to the appropriate bounding box.
+      // This is because otherwise the circle will extend off the canvas.
+      // This is automatically managed by our wrapper's subcanvas system!
+      imageMode(PApplet.CORNER);
+      clip(x, y, w, h);
+
       rectMode(PApplet.CORNER);
       fill(0, 255, 0); // fill(GREEN)
       rect(x, y, w, h); // draw subcanvas
       noFill();
       strokeWeight(3);
       stroke(0, 0, 255); // fill(BLUE)
+      rectMode(PApplet.CENTER);
       rect(x + 3 * w / 4, y + 3 * h / 4, 20, 20); // Manually calculate offsets
       // Keep noFill() setting from above
       strokeWeight(2);
       stroke(255, 0, 0); // fill(RED)
-      ellipseMode(PApplet.CORNER);
-      ellipse(x + w / 4, y + h / 4, 40, 40); // Circle.of(40)
+      ellipseMode(PApplet.CENTER);
+      ellipse(x + w / 4, y + h / 4, 2 * 80, 2 * 80); // Circle.of(80)
       // Better remember these, otherwise things will turn red
       noStroke();
 
@@ -105,6 +113,9 @@ public class ScreenSaver {
       if (x <= 0) xVelocity = -xVelocity;
       if (y >= height - h - 1) yVelocity = -yVelocity;
       if (y <= 0) yVelocity = -yVelocity;
+      
+      // Remember to turn off clip!
+      clip(0, 0, width, height);
     }
   }
 }
