@@ -17,9 +17,9 @@ import java.util.Set;
  * (so that a method can return a canvas, an image, or a shape to
  * be drawn on the screen).
  *
- * A canvas is created via the static method {@link Canvas.of}. A
+ * A canvas is created via the static method {@link Canvas#of}. A
  * "main canvas" is also provided to the client via the
- * {@link ProcessingApp#draw} method upon which the client is meant
+ * {@link ProcessingApp#drawFrame} method upon which the client is meant
  * to draw shapes, images, and other canvases.
  *
  * All methods in this class throw {@link NullPointerException} if
