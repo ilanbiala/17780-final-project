@@ -22,7 +22,7 @@ public interface ProcessingApp {
    * @param windowWidth    The window width
    * @param windowHeight   The window height
    */
-  static void start(BiFunction<Integer, Integer, ProcessingApp> appConstructor, int windowWidth, int windowHeight) {
+  static void start(BiFunction<Double, Double, ProcessingApp> appConstructor, double windowWidth, double windowHeight) {
     Objects.requireNonNull(appConstructor);
     Canvas mainCanvas = Canvas.of(windowWidth, windowHeight);
 
@@ -31,7 +31,7 @@ public interface ProcessingApp {
 
       @Override
       public void settings() {
-        size(windowWidth, windowHeight);
+        size((int) windowWidth, (int) windowHeight);
       }
 
       @Override
