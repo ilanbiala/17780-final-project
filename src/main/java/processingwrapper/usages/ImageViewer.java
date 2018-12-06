@@ -19,8 +19,8 @@ public class ImageViewer {
   }
 
   static class ImageViewerApp implements ProcessingApp {
-    private final int width;
-    private final int height;
+    private final double width;
+    private final double height;
 
     final Canvas dogCanvas;
     final Canvas catCanvas;
@@ -35,11 +35,11 @@ public class ImageViewer {
     final Position centered;
     final ImageSettings sized;
 
-    ImageViewerApp(int width, int height) {
+    ImageViewerApp(double width, double height) {
       this.width = width;
       this.height = height;
 
-      int w = width / 2, h = height / 2;
+      double w = width / 2, h = height / 2;
       dogCanvas = Canvas.of(w, h);
       catCanvas = Canvas.of(w, h);
       wolfCanvas = Canvas.of(w, h);

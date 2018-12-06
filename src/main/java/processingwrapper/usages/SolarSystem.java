@@ -27,22 +27,22 @@ public class SolarSystem implements ProcessingApp {
     EARTH_PROPERTIES = ShapeSettings.createWithFill(Color.BLUE),
     MOON_PROPERTIES = ShapeSettings.createWithFill(Color.GRAY);
 
-  public SolarSystem(int width, int height) {
-    double sunRadius = width/10;
-    double venusRadius = sunRadius/5.2f;
-    double earthRadius = sunRadius/5;
-    double moonRadius = earthRadius/3;
+  public SolarSystem(double width, double height) {
+    double sunRadius = width / 10;
+    double venusRadius = sunRadius / 5.2;
+    double earthRadius = sunRadius / 5;
+    double moonRadius = earthRadius / 3;
 
-    venusOrbitRadius = Math.abs(3.25f*sunRadius);
-    earthOrbitRadius = Math.abs(4*sunRadius);
-    moonOrbitRadius = earthRadius + 2*moonRadius;
+    venusOrbitRadius = Math.abs(3.25 * sunRadius);
+    earthOrbitRadius = Math.abs(4 * sunRadius);
+    moonOrbitRadius = earthRadius + 2 * moonRadius;
 
-    int earthOrbitCanvasSize = (int) (3*earthRadius + 2*moonRadius);
+    double earthOrbitCanvasSize = 3 * earthRadius + 2 * moonRadius;
     venusAngleDeg = 0;
     earthAngleDeg = 0;
     moonAngleDeg = 0;
 
-    center = Position.centeredAt(width/2, height/2);
+    center = Position.centeredAt(width / 2, height / 2);
     earthOrbitCanvas = Canvas.of(earthOrbitCanvasSize, earthOrbitCanvasSize);
     earthCenter = Position.centeredAt(earthOrbitCanvasSize / 2, earthOrbitCanvasSize / 2);
 

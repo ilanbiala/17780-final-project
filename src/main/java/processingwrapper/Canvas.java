@@ -26,12 +26,12 @@ import java.util.Set;
  * provided a null argument.
  */
 public class Canvas {
-  private int width, height;
+  private double width, height;
   private List<Drawable> drawables;
   private List<Position> positions;
   private java.awt.Color backgroundColor;
 
-  private Canvas(int width, int height) {
+  private Canvas(double width, double height) {
     assert(width > 0 && height > 0);
     this.width = width;
     this.height = height;
@@ -44,20 +44,20 @@ public class Canvas {
    * Create a canvas with the specified (positive) width and height.
    * @throws IllegalArgumentException if width or height is not positive.
    */
-  public static Canvas of(int width, int height) {
-    if (width <= 0) throw new IllegalArgumentException("width non-positive");
-    if (height <= 0) throw new IllegalArgumentException("height non-positive");
+  public static Canvas of(double width, double height) {
+    if (!Shape.isPositive(width)) throw new IllegalArgumentException("width non-positive");
+    if (!Shape.isPositive(height)) throw new IllegalArgumentException("height non-positive");
     return new Canvas(width, height);
   }
 
   /** @return the width of the canvas as specified by the creator of the canvas. */
-  public int width() {
-    return this.width;
+  public double width() {
+    return width;
   }
 
   /** @return the height of the canvas as specified by the creator of the canvas. */
-  public int height() {
-    return this.height;
+  public double height() {
+    return height;
   }
 
   /** Draw the provided object at the given position. */
@@ -137,27 +137,35 @@ public class Canvas {
   // Internally-used function that flushes the drawn entities out to the screen
   // within the bounding box given by the coordinates, and failing if we encounter
   // a cycle.
-  private void commitAt(PApplet app, int xLo, int yLo, int xHi, int yHi, Set<Canvas> seen) {
+  private void commitAt(PApplet app, double xLo, double yLo, double xHi, double yHi, Set<Canvas> seen) {
     assert (drawables.size() == positions.size());
 
     // If a canvas is nested within another canvas, its actual width on the screen may be
     // smaller than the user-specified width. (This happens if the nested canvas would
     // extend outside the boundary imposed by the enclosing canvas.)
     // effectiveWidth <= width
-    int effectiveWidth = Math.min(width, xHi - xLo);
-    int effectiveHeight = Math.min(height, yHi - yLo);
+    double effectiveWidth = Math.min(width, xHi - xLo);
+    double effectiveHeight = Math.min(height, yHi - yLo);
 
     // Draw a rectangle for the canvas.
     if (backgroundColor != null) {
       app.rectMode(PApplet.CORNER);
       app.fill(backgroundColor.getRGB());
       app.noStroke();
-      app.rect(xLo, yLo, effectiveWidth, effectiveHeight);
+      app.rect(
+          (float) xLo,
+          (float) yLo,
+          (float) effectiveWidth,
+          (float) effectiveHeight);
     }
 
     // Only allow drawing within a subrectangle.
     app.imageMode(PApplet.CORNER);
-    app.clip(xLo, yLo, effectiveWidth, effectiveHeight);
+    app.clip(
+        (float) xLo,
+        (float) yLo,
+        (float) effectiveWidth,
+        (float) effectiveHeight);
 
     for (int i = 0; i < drawables.size(); i++) {
       Drawable drawable = drawables.get(i);
@@ -215,27 +223,31 @@ public class Canvas {
             throw new IllegalStateException("The created main canvas has a canvas drawn as a sub-canvas of itself.");
           }
 
-          int dx, dy;
+          double dx, dy;
           if (drawMode == Position.DrawMode.CENTER) {
-            dx = (int) pos.x() - canvas.width() / 2;
-            dy = (int) pos.y() - canvas.height() / 2;
+            dx = pos.x() - canvas.width() / 2;
+            dy = pos.y() - canvas.height() / 2;
           } else {
-            dx = (int) pos.x();
-            dy = (int) pos.y();
+            dx = pos.x();
+            dy = pos.y();
           }
 
           // Figure out new coordinates
-          int xLoNew = xLo + dx;
-          int xHiNew = Math.min(xHi, xLoNew + canvas.width());
-          int yLoNew = yLo + dy;
-          int yHiNew = Math.min(yHi, yLoNew + canvas.height());
+          double xLoNew = xLo + dx;
+          double xHiNew = Math.min(xHi, xLoNew + canvas.width());
+          double yLoNew = yLo + dy;
+          double yHiNew = Math.min(yHi, yLoNew + canvas.height());
           seen.add(canvas);
           canvas.commitAt(app, xLoNew, yLoNew, xHiNew, yHiNew, seen);
           seen.remove(canvas);
 
           // We have to re-set clip after recursive call to the canvas.
           app.imageMode(PApplet.CORNER);
-          app.clip(xLo, yLo, effectiveWidth, effectiveHeight);
+          app.clip(
+              (float) xLo,
+              (float) yLo,
+              (float) effectiveWidth,
+              (float) effectiveHeight);
           break;
       }
     }

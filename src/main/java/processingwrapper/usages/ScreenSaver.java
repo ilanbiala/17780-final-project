@@ -20,10 +20,10 @@ public class ScreenSaver {
   
   static class ScreensaverApp implements ProcessingApp {
     private static final double V = 3;
-    private final int width, height;
+    private final double width, height;
     private double x, y;
     private double xVelocity, yVelocity;
-    public ScreensaverApp(int width, int height) {
+    public ScreensaverApp(double width, double height) {
       this.width = width;
       this.height = height;
       x = 0;
